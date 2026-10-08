@@ -1,0 +1,27 @@
+.mainWindowHeader {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 16px;
+    border-bottom: 1px solid var(--border);
+    background: #13161a;
+}
+
+.mainWindowHeaderNameContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.mainWindowHeaderName {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.mainWindowHeaderSubtitle {
+    color: var(--disabled);
+    font-size: 12px;
+}

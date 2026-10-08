@@ -1,0 +1,30 @@
+.messageList {
+    overflow: auto;
+    background: #101216;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.messageList > :first-child {
+    margin-top: auto;
+}
+
+.messageGroup {
+    margin-top: 24px;
+}
+
+.dateSeparatorContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 8px 0 4px 0;
+}
+
+.dateSeparator {
+    padding: 4px 6px;
+    border-radius: 10px;
+    background: #282c42b2;
+    color: var(--white);
+    font-size: 14px;
+}
