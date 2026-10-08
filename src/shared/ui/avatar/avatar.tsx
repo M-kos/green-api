@@ -3,14 +3,12 @@ import classes from './avatar.module.css';
 
 interface Props {
   fullName: string;
-  online?: boolean;
 }
 
-export const Avatar = ({ fullName, online = false }: Props) => {
+export const Avatar = ({ fullName }: Props) => {
   return (
     <span className={classes.avatar}>
       <span>{getInitials(fullName)}</span>
-      {online && <span className={classes.avatarStatus} />}
     </span>
   );
 };
