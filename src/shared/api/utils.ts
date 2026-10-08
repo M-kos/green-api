@@ -1,11 +1,9 @@
-import type { ChatMessage, Credentials } from './types.ts';
-import { API_URL } from './constants.ts';
+import type { BuildUrlFn, ChatMessage, Credentials } from './types.ts';
 import type { Notification, TextMessageData } from './dto.ts';
 
-export const createBuildUrl = (credentials: Credentials) => {
-  return (path: string): string => {
-    const { idInstance, apiTokenInstance } = credentials;
-    return `${API_URL}/waInstance${idInstance}/${path}/${apiTokenInstance}`;
+export const createBuildUrl = ({ idInstance, apiTokenInstance }: Credentials): BuildUrlFn => {
+  return (path: string, subPath = ''): string => {
+    return `${import.meta.env.VITE_API_URL}/waInstance${idInstance}/${path}/${apiTokenInstance}${subPath}`;
   };
 };
 
@@ -18,10 +16,7 @@ export function notificationToMessage(notification: Notification): ChatMessage |
 
   const isIncoming = typeWebhook === 'incomingMessageReceived';
 
-  const isOutgoing =
-    typeWebhook === 'outgoingMessageReceived' || typeWebhook === 'outgoingAPIMessageReceived';
-
-  if (!isIncoming && !isOutgoing) {
+  if (!isIncoming) {
     return null;
   }
 

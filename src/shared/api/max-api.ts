@@ -1,4 +1,4 @@
-import type { Client } from './types';
+import type { BuildUrlFn, Client, MaxApi } from './types';
 import type {
   CheckAccountRequest,
   CheckAccountResponse,
@@ -7,27 +7,28 @@ import type {
   SendMessageRequest,
   SendMessageResponse,
 } from './dto.ts';
-import { apiClient } from './client.ts';
 
-class MaxApi {
+export class MaxApiImpl implements MaxApi {
   private readonly client: Client;
+  private readonly buildUrl: BuildUrlFn;
 
-  constructor(client: Client) {
+  constructor(client: Client, buildUrl: BuildUrlFn) {
     this.client = client;
+    this.buildUrl = buildUrl;
   }
 
-  checkAccount(request: CheckAccountRequest): Promise<CheckAccountResponse> {
+  checkAccount(request: CheckAccountRequest): Promise<CheckAccountResponse | null> {
     return this.client.request({
       method: 'POST',
-      path: 'checkAccount',
+      path: this.buildUrl('checkAccount'),
       body: request,
     });
   }
 
-  sendMessage(request: SendMessageRequest): Promise<SendMessageResponse> {
+  sendMessage(request: SendMessageRequest): Promise<SendMessageResponse | null> {
     return this.client.request({
       method: 'POST',
-      path: 'sendMessage',
+      path: this.buildUrl('sendMessage'),
       body: request,
     });
   }
@@ -38,17 +39,15 @@ class MaxApi {
   ): Promise<ReceiveNotificationResponse | null> {
     return this.client.request({
       method: 'GET',
-      path: `receiveNotification?receiveTimeout=${receiveTimeout}`,
+      path: this.buildUrl('receiveNotification', `?receiveTimeout=${receiveTimeout}`),
       signal,
     });
   }
 
-  deleteNotification(receiptId: number): Promise<DeleteNotificationResponse> {
+  deleteNotification(receiptId: number): Promise<DeleteNotificationResponse | null> {
     return this.client.request({
       method: 'DELETE',
-      path: `deleteNotification/${receiptId}`,
+      path: this.buildUrl('deleteNotification', `/${receiptId}`),
     });
   }
 }
-
-export const maxApi = new MaxApi(apiClient);

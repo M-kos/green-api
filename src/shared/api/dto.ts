@@ -72,3 +72,10 @@ export interface ReceiveNotificationResponse {
   receiptId: number;
   body: Notification;
 }
+
+export type StateInstanceStatus =
+  'authorized' | 'notAuthorized' | 'blocked' | 'starting' | 'suspended' | 'pendingPassword';
+
+export interface StateInstanceResponse {
+  stateInstance: StateInstanceStatus;
+}

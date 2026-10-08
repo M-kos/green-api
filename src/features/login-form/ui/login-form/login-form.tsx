@@ -6,9 +6,10 @@ import { Input } from '../../../../shared/ui/input/input.tsx';
 interface Props {
   onSubmit: (credentials: Credentials) => void;
   disabled?: boolean;
+  error?: Error | null;
 }
 
-export const LoginForm = ({ onSubmit, disabled = false }: Props) => {
+export const LoginForm = ({ error, onSubmit, disabled = false }: Props) => {
   const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -33,6 +34,8 @@ export const LoginForm = ({ onSubmit, disabled = false }: Props) => {
           disabled={disabled}
         />
       </div>
+
+      {error && error.message}
 
       <button className={classes.submit} type="submit" disabled={disabled}>
         Подключиться
