@@ -10,7 +10,7 @@ export const Avatar = ({ fullName, online = false }: Props) => {
   return (
     <span className={classes.avatar}>
       <span>{getInitials(fullName)}</span>
-      {online && <span className={classes.avatar_status} />}
+      {online && <span className={classes.avatarStatus} />}
     </span>
   );
 };

@@ -24,7 +24,7 @@
 .messageText {
     margin: 0;
     white-space: pre-wrap;
-    color: #e9ebef;
+    color: var(--text);
     font-size: 16px;
 }
 

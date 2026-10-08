@@ -1,7 +1,7 @@
 .sendButton {
     width: 32px;
     height: 32px;
-    background: #007aff;
+    background: var(--send-button-background);
     cursor: pointer;
     border: none;
     border-radius: 50%;
@@ -13,14 +13,14 @@
 }
 
 .sendButton:hover {
-    background-color: #479fff;
+    background-color: var(--send-button-hover);
 }
 
 .sendButton:active {
-    background-color: #006ee5;
+    background-color: var(--send-button-active);
 }
 
 .sendButton:disabled {
     cursor: not-allowed;
-    background-color: var(--disabled-2)
+    background-color: var(--disabled-2);
 }

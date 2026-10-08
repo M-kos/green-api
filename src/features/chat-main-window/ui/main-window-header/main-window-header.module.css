@@ -5,7 +5,7 @@
     gap: 12px;
     padding: 0 16px;
     border-bottom: 1px solid var(--border);
-    background: #13161a;
+    background: var(--header-background);
 }
 
 .mainWindowHeaderNameContainer {

@@ -1,0 +1,14 @@
+.dateSeparatorContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 8px 0 4px 0;
+}
+
+.dateSeparator {
+    padding: 4px 6px;
+    border-radius: 10px;
+    background: var(--date-separator-background);
+    color: var(--text);
+    font-size: 14px;
+}

@@ -1,4 +1,4 @@
-import classes from './message-list.module.css';
+import classes from './message-group-date-separator.module.css';
 
 interface DateSeparatorProps {
   children: string;

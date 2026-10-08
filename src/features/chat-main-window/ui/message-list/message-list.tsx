@@ -1,4 +1,4 @@
-import { MessageGroupDateSeparator } from './message-group-date-separator.tsx';
+import { MessageGroupDateSeparator } from '../message-group-date-separator/message-group-date-separator.tsx';
 import { MessageBubble, type MessageBubbleData } from '../message-bubble/message-bubble.tsx';
 import classes from './message-list.module.css';
 import { useEffect, useRef } from 'react';
