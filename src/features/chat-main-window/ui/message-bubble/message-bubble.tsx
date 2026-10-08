@@ -1,15 +1,8 @@
 import classes from './message-bubble.module.css';
-
-export interface MessageBubbleData {
-  id: string;
-  text: string;
-  time: string;
-  outgoing?: boolean;
-  read?: boolean;
-}
+import type { MessageData } from '../../../../entities/message';
 
 interface Props {
-  message: MessageBubbleData;
+  message: MessageData;
 }
 
 export const MessageBubble = ({ message }: Props) => {

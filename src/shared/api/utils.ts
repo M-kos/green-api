@@ -1,5 +1,5 @@
 import type { BuildUrlFn, ChatMessage, Credentials } from './types.ts';
-import type { Notification, TextMessageData } from './dto.ts';
+import type { Notification } from './dto.ts';
 
 export const createBuildUrl = ({ idInstance, apiTokenInstance }: Credentials): BuildUrlFn => {
   return (path: string, subPath = ''): string => {
@@ -7,30 +7,41 @@ export const createBuildUrl = ({ idInstance, apiTokenInstance }: Credentials): B
   };
 };
 
-export function notificationToMessage(notification: Notification): ChatMessage | null {
-  const { typeWebhook, idMessage, timestamp, senderData, messageData } = notification;
+const isTextMessage = (typeMessage: string) =>
+  typeMessage === 'textMessage' || typeMessage === 'extendedTextMessage';
 
+export function notificationToMessage({
+  typeWebhook,
+  idMessage,
+  timestamp,
+  senderData,
+  messageData,
+}: Notification): ChatMessage | null {
   if (!idMessage || !senderData || !messageData) {
     return null;
   }
 
   const isIncoming = typeWebhook === 'incomingMessageReceived';
 
-  if (!isIncoming) {
+  if (!isTextMessage(messageData.typeMessage)) {
     return null;
   }
 
-  if (messageData.typeMessage !== 'textMessage') {
-    return null;
-  }
-
-  const textMessageData = messageData as TextMessageData;
-
-  return {
+  const message: ChatMessage = {
     id: idMessage,
     chatId: senderData.chatId,
-    text: textMessageData.textMessageData.textMessage,
     timestamp: timestamp * 1000,
     direction: isIncoming ? 'incoming' : 'outgoing',
+    text: '',
   };
+
+  if (messageData.typeMessage === 'textMessage') {
+    message.text = messageData.textMessageData.textMessage;
+  }
+
+  if (messageData.typeMessage === 'extendedTextMessage') {
+    message.text = messageData.extendedTextMessageData.text;
+  }
+
+  return message;
 }

@@ -5,10 +5,10 @@ import { ChatPage } from '../pages/chat';
 import { ApiProvider } from '../shared/providers/api-provider/api-provider.tsx';
 
 function App() {
-  const [credentials, setCredential] = useState<Credentials | null>(null);
+  const [credentials, setCredentials] = useState<Credentials | null>(null);
 
   if (!credentials) {
-    return <LoginPage onSubmit={(creds) => setCredential(creds)} />;
+    return <LoginPage onSubmit={(creds) => setCredentials(creds)} />;
   }
 
   return (

@@ -1,18 +1,15 @@
 import { MessageGroupDateSeparator } from '../message-group-date-separator/message-group-date-separator.tsx';
-import { MessageBubble, type MessageBubbleData } from '../message-bubble/message-bubble.tsx';
+import { MessageBubble } from '../message-bubble/message-bubble.tsx';
 import classes from './message-list.module.css';
 import { useEffect, useRef } from 'react';
+import { useMessageList } from '../../hooks/use-message-list.ts';
 
-export interface MessageGroup {
-  date: string;
-  messages: MessageBubbleData[];
+interface Props {
+  chatId?: string;
 }
 
-interface MessageListProps {
-  groups: MessageGroup[];
-}
-
-export const MessageList = ({ groups }: MessageListProps) => {
+export const MessageList = ({ chatId }: Props) => {
+  const { messages, error } = useMessageList(chatId);
   const listRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -23,14 +20,13 @@ export const MessageList = ({ groups }: MessageListProps) => {
 
   return (
     <div ref={listRef} className={classes.messageList}>
-      {groups.map((group) => (
-        <div className={classes.messageGroup} key={group.date}>
-          <MessageGroupDateSeparator>{group.date}</MessageGroupDateSeparator>
-          {group.messages.map((message) => (
-            <MessageBubble key={message.id} message={message} />
-          ))}
-        </div>
-      ))}
+      <div className={classes.messageGroup}>
+        <MessageGroupDateSeparator>Сегодня</MessageGroupDateSeparator>
+        {messages.map((message) => (
+          <MessageBubble key={message.id} message={message} />
+        ))}
+        {error}
+      </div>
     </div>
   );
 };

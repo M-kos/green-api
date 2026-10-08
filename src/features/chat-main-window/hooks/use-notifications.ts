@@ -1,46 +1,33 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
-import type { ChatMessage, MaxApi } from '../api/types.ts';
-import { notificationToMessage } from '../api/utils.ts';
+import type { ChatMessage, MaxApi } from '../../../shared/api/types.ts';
+import { notificationToMessage } from '../../../shared/api/utils.ts';
 
 const RECEIVE_TIMEOUT = 60;
 const RETRY_DELAY = 2_000;
 
-export type NotificationsStatus = 'idle' | 'connecting' | 'connected' | 'error';
-
-interface UseNotificationsOptions {
-  api: MaxApi | null;
-  chatId: string | null;
+interface Props {
+  api: MaxApi;
+  chatId: string | undefined;
   onMessage: (message: ChatMessage) => void;
   onError?: (error: unknown) => void;
 }
 
-interface UseNotificationsResult {
-  status: NotificationsStatus;
-}
-
 const wait = (delay: number, signal: AbortSignal): Promise<void> =>
   new Promise((resolve, reject) => {
-    const timeoutId = window.setTimeout(resolve, delay);
+    const timeoutId = setTimeout(resolve, delay);
 
     signal.addEventListener(
       'abort',
       () => {
-        window.clearTimeout(timeoutId);
+        clearTimeout(timeoutId);
         reject(signal.reason);
       },
       { once: true },
     );
   });
 
-export const useNotifications = ({
-  api,
-  chatId,
-  onMessage,
-  onError,
-}: UseNotificationsOptions): UseNotificationsResult => {
-  const [status, setStatus] = useState<NotificationsStatus>('idle');
-
+export const useNotifications = ({ api, chatId, onMessage, onError }: Props) => {
   const onMessageRef = useRef(onMessage);
   const onErrorRef = useRef(onError);
 
@@ -50,16 +37,13 @@ export const useNotifications = ({
   }, [onMessage, onError]);
 
   useEffect(() => {
-    if (!api || !chatId) {
-      // setStatus('idle');
-      return;
-    }
-
     const controller = new AbortController();
     const { signal } = controller;
 
     const receiveNotifications = async () => {
-      setStatus('connecting');
+      if (!chatId) {
+        return;
+      }
 
       while (!signal.aborted) {
         try {
@@ -68,8 +52,6 @@ export const useNotifications = ({
           if (signal.aborted) {
             return;
           }
-
-          setStatus('connected');
 
           if (!notification) {
             continue;
@@ -89,7 +71,6 @@ export const useNotifications = ({
             return;
           }
 
-          setStatus('error');
           onErrorRef.current?.(error);
 
           try {
@@ -101,10 +82,10 @@ export const useNotifications = ({
       }
     };
 
-    void receiveNotifications();
+    receiveNotifications();
 
-    return () => controller.abort();
+    return () => {
+      controller.abort();
+    };
   }, [api, chatId]);
-
-  return { status };
 };

@@ -7,15 +7,11 @@ import { createBuildUrl } from '../../api/utils.ts';
 import type { ApiContextData } from './types.ts';
 
 interface Props {
-  credentials: Credentials | null;
+  credentials: Credentials;
 }
 
 export const ApiProvider = ({ credentials, children }: React.PropsWithChildren<Props>) => {
-  const contextData: ApiContextData | null = useMemo(() => {
-    if (!credentials) {
-      return null;
-    }
-
+  const contextData: ApiContextData = useMemo(() => {
     const buildUrl = createBuildUrl(credentials);
 
     return {

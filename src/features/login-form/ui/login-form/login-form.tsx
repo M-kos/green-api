@@ -14,8 +14,8 @@ export const LoginForm = ({ error, onSubmit, disabled = false }: Props) => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
-    const idInstance = formData.get('idInstance')?.toString() || '';
-    const apiTokenInstance = formData.get('apiTokenInstance')?.toString() || ''.trim();
+    const idInstance = formData.get('idInstance')?.toString().trim() || '';
+    const apiTokenInstance = formData.get('apiTokenInstance')?.toString().trim() || '';
 
     onSubmit({ idInstance, apiTokenInstance });
   };

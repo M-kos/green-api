@@ -1,32 +1,19 @@
 import { MainWindowHeader } from '../main-window-header/main-window-header.tsx';
-import { type MessageGroup, MessageList } from '../message-list/message-list.tsx';
+import { MessageList } from '../message-list/message-list.tsx';
 import { MessageSender } from '../message-sender/message-sender.tsx';
 import classes from './main-window.module.css';
+import type { ContactInfo } from '../../../../entities/contact-info';
 
 interface Props {
-  name: string;
-  subtitle?: string;
-  online?: boolean;
-  messages: MessageGroup[];
-  composerValue: string;
-  onComposerChange?: (value: string) => void;
-  onSend?: () => void;
+  contact?: ContactInfo;
 }
 
-export const MainWindow = ({
-  name,
-  subtitle,
-  online,
-  messages,
-  composerValue,
-  onComposerChange,
-  onSend,
-}: Props) => {
+export const MainWindow = ({ contact }: Props) => {
   return (
     <div className={classes.mainWindow}>
-      <MainWindowHeader name={name} subtitle={subtitle} online={online} />
-      <MessageList groups={messages} />
-      <MessageSender value={composerValue} onChange={onComposerChange} onSend={onSend} />
+      <MainWindowHeader name={contact?.name || ''} />
+      <MessageList chatId={contact?.chatId} key={contact?.chatId} />
+      <MessageSender chatId={contact?.chatId} />
     </div>
   );
 };
