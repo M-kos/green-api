@@ -3,6 +3,8 @@ import type {
   CheckAccountRequest,
   CheckAccountResponse,
   DeleteNotificationResponse,
+  GetContactInfoRequest,
+  GetContactInfoResponse,
   ReceiveNotificationResponse,
   SendMessageRequest,
   SendMessageResponse,
@@ -21,6 +23,14 @@ export class MaxApiImpl implements MaxApi {
     return this.client.request({
       method: 'POST',
       path: this.buildUrl('checkAccount'),
+      body: request,
+    });
+  }
+
+  getContactInfo(request: GetContactInfoRequest): Promise<GetContactInfoResponse | null> {
+    return this.client.request({
+      method: 'POST',
+      path: this.buildUrl('getContactInfo'),
       body: request,
     });
   }

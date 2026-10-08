@@ -2,6 +2,8 @@ import type {
   CheckAccountRequest,
   CheckAccountResponse,
   DeleteNotificationResponse,
+  GetContactInfoRequest,
+  GetContactInfoResponse,
   ReceiveNotificationResponse,
   SendMessageRequest,
   SendMessageResponse,
@@ -29,6 +31,7 @@ export interface MaxApi {
     signal?: AbortSignal,
   ): Promise<ReceiveNotificationResponse | null>;
   deleteNotification(receiptId: number): Promise<DeleteNotificationResponse | null>;
+  getContactInfo(request: GetContactInfoRequest): Promise<GetContactInfoResponse | null>;
 }
 
 export interface LoginApi {
