@@ -1,0 +1,41 @@
+.form {
+    width: 400px;
+    padding: 32px;
+    border-radius: 16px;
+    background: var(--sidebar-background);
+    display: flex;
+    flex-direction: column;
+    gap: 36px
+}
+
+
+.title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.fields {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.submit {
+    width: 100%;
+    height: 40px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--accent);
+    color: var(--text);
+    cursor: pointer;
+}
+
+.submit:hover:not(:disabled) {
+    background: var(--accent-hover);
+}
+
+.submit:disabled {
+    cursor: not-allowed;
+    background: var(--disabled-2);
+}
