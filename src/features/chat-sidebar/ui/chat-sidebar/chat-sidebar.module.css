@@ -12,6 +12,7 @@
     padding: 0 16px;
     display: flex;
     align-items: center;
+    margin: 0;
 }
 
 .sidebarTitle {
@@ -24,10 +25,8 @@
     padding: 0 16px;
 }
 
-.chatList {
-    min-height: 0;
+.previewContainer {
     flex: 1;
     overflow-y: auto;
-    padding: 2px 6px 10px;
-    list-style: none;
+    padding: 16px 4px;
 }

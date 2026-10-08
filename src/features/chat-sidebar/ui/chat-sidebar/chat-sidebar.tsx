@@ -1,23 +1,18 @@
 import classes from './chat-sidebar.module.css';
-import type { ChatPreview } from '../../../../entities/chat-preview';
-import { ChatPreviewButton } from '../chat-preview-button/chat-preview-button.tsx';
 import { Input } from '../../../../shared/ui/input/input.tsx';
+import { ChatPreview } from '../chat-preview/chat-preview.tsx';
+import type { ContactInfo } from '../../../../entities/contact-info';
+import { useChatSidebar } from '../../hooks/use-chat-sidebar.ts';
 
 interface Props {
-  chats: ChatPreview[];
-  activeChat: ChatPreview;
   title?: string;
-  onSearch?: () => void;
-  onSelectChat: (chat: ChatPreview) => void;
+  contactInfo?: ContactInfo;
+  setContactInfo: (contact: ContactInfo) => void;
 }
 
-export const ChatSidebar = ({
-  chats,
-  activeChat,
-  title = 'Чаты',
-  onSearch,
-  onSelectChat,
-}: Props) => {
+export const ChatSidebar = ({ title = 'Чаты', setContactInfo, contactInfo }: Props) => {
+  const { handleSubmit, error, isLoading } = useChatSidebar(setContactInfo);
+
   return (
     <div className={classes.sidebar}>
       <div className={classes.sidebarHeader}>
@@ -25,20 +20,18 @@ export const ChatSidebar = ({
       </div>
 
       <div className={classes.sidebarSearch}>
-        <Input name="search" onChange={onSearch} placeholder="Введите номер телефона" />
+        <form onSubmit={handleSubmit}>
+          <Input
+            name="search"
+            placeholder="Введите номер телефона и нажмите Enter"
+            disabled={isLoading}
+          />
+        </form>
       </div>
-
-      <ol className={classes.chatList}>
-        {chats.map((chat) => (
-          <li key={chat.id}>
-            <ChatPreviewButton
-              chat={chat}
-              active={chat.id === activeChat.id}
-              onSelectChat={onSelectChat}
-            />
-          </li>
-        ))}
-      </ol>
+      {error?.message}
+      <div className={classes.previewContainer}>
+        {contactInfo && <ChatPreview contact={contactInfo} />}
+      </div>
     </div>
   );
 };

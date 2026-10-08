@@ -23,7 +23,8 @@ export interface DeleteNotificationResponse {
   reason: string;
 }
 
-export type NotificationType = 'incomingMessageReceived';
+export type NotificationType =
+  'incomingMessageReceived' | 'outgoingMessageReceived' | 'outgoingAPIMessageReceived';
 
 export interface InstanceData {
   idInstance: number;
@@ -78,4 +79,18 @@ export type StateInstanceStatus =
 
 export interface StateInstanceResponse {
   stateInstance: StateInstanceStatus;
+}
+
+export interface GetContactInfoRequest {
+  chatId: string;
+}
+export interface GetContactInfoResponse {
+  avatar: string;
+  name: string;
+  contactName: string;
+  chatId: string;
+  chatType: string;
+  lastSeen: number;
+  phoneNumber: number;
+  phoneNumberTimestamp: number;
 }

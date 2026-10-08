@@ -13,22 +13,19 @@
     text-align: left;
 }
 
-.chatPreview:hover {
-    background: var(--surface-hover);
-}
-
-.chatPreviewActive {
-    background: var(--surface-active);
-}
 
 .chatPreviewContent {
-    min-width: 0;
     flex: 1;
-}
-
-.chatPreviewTopline, .chatPreviewBottomline {
-    min-width: 0;
     display: flex;
     align-items: center;
-    gap: 8px;
+    justify-content: space-between;
+}
+
+.chatPreviewTitle {
+    font-weight: 600;
+}
+
+.chatPreviewTime {
+    color: var(--disabled-2);
+    font-size: 14px;
 }
