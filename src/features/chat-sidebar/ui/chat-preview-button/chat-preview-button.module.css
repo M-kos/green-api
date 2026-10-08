@@ -1,0 +1,34 @@
+.chatPreview {
+    width: 100%;
+    min-height: 68px;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 9px 10px;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    text-align: left;
+}
+
+.chatPreview:hover {
+    background: var(--surface-hover);
+}
+
+.chatPreviewActive {
+    background: var(--surface-active);
+}
+
+.chatPreviewContent {
+    min-width: 0;
+    flex: 1;
+}
+
+.chatPreviewTopline, .chatPreviewBottomline {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
