@@ -6,5 +6,11 @@ export default defineConfig({
   server: {
     port: 3000,
   },
+  css: {
+    devSourcemap: true,
+    modules: {
+      generateScopedName: '[name]__[local]___[hash:base64:5]',
+    },
+  },
   plugins: [react(), babel({ presets: [reactCompilerPreset()] })],
 });
