@@ -1,0 +1,24 @@
+.avatar {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--avatar-bg);
+    color: #d9dde3;
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.avatar-status {
+    position: absolute;
+    right: -1px;
+    bottom: 1px;
+    width: 11px;
+    height: 11px;
+    border: 2px solid var(--sidebar-background);
+    border-radius: 50%;
+    background: #49c978;
+}
