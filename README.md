@@ -15,7 +15,7 @@
 2. Создайте локальный файл `.env` на основе шаблона:
 
    ```bash
-   .env.template .env
+   cp .env.template .env
    ```
 
 3. Убедитесь, что в `.env` указан URL API GREEN-API:
