@@ -19,23 +19,29 @@ export interface RequestOptions<TBody = unknown> {
   signal?: AbortSignal;
 }
 
+export interface ApiResponse<T> {
+  data: T;
+}
+
+export type ExtendedResponse<T> = Promise<ApiResponse<T>>;
+
 export interface Client {
-  request<TResponse, TBody = unknown>(data: RequestOptions<TBody>): Promise<TResponse | null>;
+  request<TResponse, TBody = unknown>(data: RequestOptions<TBody>): ExtendedResponse<TResponse>;
 }
 
 export interface MaxApi {
-  checkAccount(request: CheckAccountRequest): Promise<CheckAccountResponse | null>;
-  sendMessage(request: SendMessageRequest): Promise<SendMessageResponse | null>;
+  checkAccount(request: CheckAccountRequest): ExtendedResponse<CheckAccountResponse>;
+  sendMessage(request: SendMessageRequest): ExtendedResponse<SendMessageResponse>;
   receiveNotification(
     receiveTimeout: number,
     signal?: AbortSignal,
-  ): Promise<ReceiveNotificationResponse | null>;
-  deleteNotification(receiptId: number): Promise<DeleteNotificationResponse | null>;
-  getContactInfo(request: GetContactInfoRequest): Promise<GetContactInfoResponse | null>;
+  ): ExtendedResponse<ReceiveNotificationResponse>;
+  deleteNotification(receiptId: number): ExtendedResponse<DeleteNotificationResponse>;
+  getContactInfo(request: GetContactInfoRequest): ExtendedResponse<GetContactInfoResponse>;
 }
 
 export interface LoginApi {
-  getStateInstance(): Promise<StateInstanceResponse | null>;
+  getStateInstance(): ExtendedResponse<StateInstanceResponse>;
 }
 
 export interface Credentials {

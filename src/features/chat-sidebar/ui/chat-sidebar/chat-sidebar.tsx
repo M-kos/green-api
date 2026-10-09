@@ -28,7 +28,7 @@ export const ChatSidebar = ({ title = 'Чаты', setContactInfo, contactInfo }:
           />
         </form>
       </div>
-      {error?.message}
+      <div className={classes.errorContainer}>{error?.message}</div>
       <div className={classes.previewContainer}>
         {contactInfo && <ChatPreview contact={contactInfo} />}
       </div>

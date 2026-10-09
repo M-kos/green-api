@@ -16,9 +16,9 @@ export const useLogin = (callback: (credentials: Credentials) => void) => {
     const loginApi = new LoginApiImpl(apiClient, buildUrl);
 
     try {
-      const response = await loginApi.getStateInstance();
+      const { data } = await loginApi.getStateInstance();
 
-      if (!response || response.stateInstance !== 'authorized') {
+      if (!data || data.stateInstance !== 'authorized') {
         throw new Error('Not authorized');
       }
 

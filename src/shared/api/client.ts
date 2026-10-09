@@ -1,4 +1,4 @@
-import type { Client, RequestOptions } from './types.ts';
+import type { ApiResponse, Client, RequestOptions } from './types.ts';
 
 class ApiClient implements Client {
   async request<TResponse, TBody = unknown>({
@@ -6,7 +6,7 @@ class ApiClient implements Client {
     path,
     body,
     signal,
-  }: RequestOptions<TBody>): Promise<TResponse | null> {
+  }: RequestOptions<TBody>): Promise<ApiResponse<TResponse>> {
     const response = await fetch(path, {
       method,
       headers: {
@@ -16,21 +16,36 @@ class ApiClient implements Client {
       signal,
     });
 
+    const responseBody = await response.text();
+
     if (!response.ok) {
-      throw new Error(response.statusText);
+      throw new Error(this.getErrorMessage(responseBody, response.statusText));
     }
 
-    const data = await response.text();
-
-    if (!data) {
-      return null;
+    if (!responseBody.trim()) {
+      throw new Error('Empty response body');
     }
 
     try {
-      return JSON.parse(data) as TResponse;
+      return { data: JSON.parse(responseBody) as TResponse };
     } catch {
-      return null;
+      return { data: responseBody as TResponse };
     }
+  }
+
+  private getErrorMessage(responseBody: string, statusText?: string) {
+    let message = statusText || 'Something went wrong';
+
+    if (responseBody.trim()) {
+      try {
+        const parsedBody = JSON.parse(responseBody);
+        message = parsedBody?.message || message;
+      } catch {
+        /* empty */
+      }
+    }
+
+    return message;
   }
 }
 

@@ -25,13 +25,13 @@ export const useChatSidebar = (setContactInfo: (contact: ContactInfo) => void) =
     }
 
     try {
-      const res = await checkAccount(phoneNumber);
+      const { data } = await checkAccount(phoneNumber);
 
-      if (!res || !res.exist) {
+      if (!data || !data.exist) {
         throw new Error('Account does not exist');
       }
 
-      const info = await getContactInfo(res.chatId);
+      const { data: info } = await getContactInfo(data.chatId);
 
       if (!info) {
         throw new Error('Contact not found');

@@ -8,6 +8,8 @@ interface Props {
   placeholder?: string;
 }
 
+const MAX_MESSAGE_LENGTH = 4000;
+
 export const MessageSender = ({ placeholder = 'Сообщение', chatId }: Props) => {
   const { onSend, canSend, onChange, value } = useMessageSender(chatId);
 
@@ -25,7 +27,7 @@ export const MessageSender = ({ placeholder = 'Сообщение', chatId }: Pr
             onSend();
           }
         }}
-        maxLength={4000}
+        maxLength={MAX_MESSAGE_LENGTH}
       />
       <SendButton onClick={onSend} disabled={!canSend} />
     </div>

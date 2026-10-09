@@ -47,7 +47,7 @@ export const useNotifications = ({ api, chatId, onMessage, onError }: Props) => 
 
       while (!signal.aborted) {
         try {
-          const notification = await api.receiveNotification(RECEIVE_TIMEOUT, signal);
+          const { data: notification } = await api.receiveNotification(RECEIVE_TIMEOUT, signal);
 
           if (signal.aborted) {
             return;

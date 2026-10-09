@@ -1,4 +1,4 @@
-import type { BuildUrlFn, Client, MaxApi } from './types';
+import type { BuildUrlFn, Client, ExtendedResponse, MaxApi } from './types';
 import type {
   CheckAccountRequest,
   CheckAccountResponse,
@@ -19,7 +19,7 @@ export class MaxApiImpl implements MaxApi {
     this.buildUrl = buildUrl;
   }
 
-  checkAccount(request: CheckAccountRequest): Promise<CheckAccountResponse | null> {
+  checkAccount(request: CheckAccountRequest): ExtendedResponse<CheckAccountResponse> {
     return this.client.request({
       method: 'POST',
       path: this.buildUrl('checkAccount'),
@@ -27,7 +27,7 @@ export class MaxApiImpl implements MaxApi {
     });
   }
 
-  getContactInfo(request: GetContactInfoRequest): Promise<GetContactInfoResponse | null> {
+  getContactInfo(request: GetContactInfoRequest): ExtendedResponse<GetContactInfoResponse> {
     return this.client.request({
       method: 'POST',
       path: this.buildUrl('getContactInfo'),
@@ -35,7 +35,7 @@ export class MaxApiImpl implements MaxApi {
     });
   }
 
-  sendMessage(request: SendMessageRequest): Promise<SendMessageResponse | null> {
+  sendMessage(request: SendMessageRequest): ExtendedResponse<SendMessageResponse> {
     return this.client.request({
       method: 'POST',
       path: this.buildUrl('sendMessage'),
@@ -46,7 +46,7 @@ export class MaxApiImpl implements MaxApi {
   receiveNotification(
     receiveTimeout = 5,
     signal?: AbortSignal,
-  ): Promise<ReceiveNotificationResponse | null> {
+  ): ExtendedResponse<ReceiveNotificationResponse> {
     return this.client.request({
       method: 'GET',
       path: this.buildUrl('receiveNotification', `?receiveTimeout=${receiveTimeout}`),
@@ -54,7 +54,7 @@ export class MaxApiImpl implements MaxApi {
     });
   }
 
-  deleteNotification(receiptId: number): Promise<DeleteNotificationResponse | null> {
+  deleteNotification(receiptId: number): ExtendedResponse<DeleteNotificationResponse> {
     return this.client.request({
       method: 'DELETE',
       path: this.buildUrl('deleteNotification', `/${receiptId}`),

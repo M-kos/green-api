@@ -1,4 +1,4 @@
-import type { BuildUrlFn, Client, LoginApi } from './types';
+import type { BuildUrlFn, Client, ExtendedResponse, LoginApi } from './types';
 import type { StateInstanceResponse } from './dto.ts';
 
 export class LoginApiImpl implements LoginApi {
@@ -10,7 +10,7 @@ export class LoginApiImpl implements LoginApi {
     this.buildUrl = buildUrl;
   }
 
-  getStateInstance(): Promise<StateInstanceResponse | null> {
+  getStateInstance(): ExtendedResponse<StateInstanceResponse> {
     return this.client.request({
       method: 'GET',
       path: this.buildUrl('getStateInstance'),
